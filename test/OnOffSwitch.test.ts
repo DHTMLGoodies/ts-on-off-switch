@@ -3,7 +3,7 @@ import { OnOffSwitch } from "../src/OnOffSwitch";
 import * as $ from "jquery";
 
 
-describe("MinMaxSlider", () => {
+describe("OnOffSwitch", () => {
 
     beforeEach(() => {
 

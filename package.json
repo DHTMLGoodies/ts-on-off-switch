@@ -2,8 +2,10 @@
   "name": "ts-on-off-switch",
   "version": "1.0.6",
   "description": "",
-  "main": "index.js",
+  "main": "dist/OnOffSwitch.js",
+  "types": "dist/OnOffSwitch.d.ts",
   "scripts": {
+    "declaration": "npx typescript --declarationDir ./dist -d ./src/OnOffSwitch.ts",
     "test": "karma start",
     "build": "webpack --env development",
     "prod": "webpack --env production",
