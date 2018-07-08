@@ -6,10 +6,7 @@
         "sourceMap": true,
         "noImplicitAny": true,
         "module": "es6",
-        "target": "es5",
-        "paths": {
-            "lib/*": ["lib/*"]
-        }
+        "target": "es5"
     },
     "include": [
         "./lib/**/*"
