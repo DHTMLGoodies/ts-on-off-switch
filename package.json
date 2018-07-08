@@ -2,19 +2,19 @@
   "name": "ts-on-off-switch",
   "version": "1.0.9",
   "description": "",
-  "main": "dist/OnOffSwitch.js",
-  "types": "dist/OnOffSwitch.d.ts",
+  "main": "src/OnOffSwitch",
+  "types": "dist/OnOffSwitch",
   "scripts": {
     "declaration": "npx typescript --declarationDir ./dist -d ./src/OnOffSwitch.ts",
     "test": "karma start",
     "build": "webpack --env development",
-    "prod": "webpack --env production",
+    "build:prod": "webpack --env production",
     "lint": "tslint ./src/OnOffSwitch.ts",
     "push:origin": "git push --tags origin HEAD:master",
     "version:major": "npm version major",
     "version:minor": "npm version minor",
     "version:patch": "npm version patch",
-    "deploy:prod": "npm run lint && npm run prod -s && npm run version:patch && npm run push:origin && npm publish"
+    "deploy:prod": "npm run lint && npm run build:prod -s && npm run version:patch && npm run push:origin && npm publish"
   },
   "author": "",
   "license": "MIT",
