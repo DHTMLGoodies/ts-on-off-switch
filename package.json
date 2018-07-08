@@ -1,7 +1,7 @@
 {
   "name": "ts-on-off-switch",
   "version": "1.0.13",
-  "description": "",
+  "description": "JQuery On/Off Switch widget",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
