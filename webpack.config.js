@@ -45,7 +45,7 @@ const baseConfig = {
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: 'OnOffSwitch.js',
-        libraryTarget: 'window',
+        libraryTarget: 'umd',
         publicPath: '/dist/',
     },
     externals: {
