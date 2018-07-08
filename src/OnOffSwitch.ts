@@ -342,7 +342,7 @@ export class OnOffSwitch {
 
     }
 
-    endDrag() {
+    private endDrag() {
         if (!this.isDragging) return true;
 
         if (!this.hasBeenDragged) {
@@ -359,11 +359,11 @@ export class OnOffSwitch {
         this.isDragging = false;
     }
 
-    getTrackPosUnchecked() {
+    private getTrackPosUnchecked() {
         return 0 - this.width + this.height;
     }
 
-    animateLeft() {
+    private animateLeft() {
         this.onOffTrackContainer.animate({ left: this.getTrackPosUnchecked() }, 100);
         this.thumb.animate({ left: 0 }, 100, "swing", this.uncheck.bind(this));
     }
@@ -401,7 +401,7 @@ export class OnOffSwitch {
         this.notifyListeners();
     }
 
-    notifyListeners() {
+    private notifyListeners() {
         if (this.params.listener) {
             this.params.listener.call(this, this.name, this.checked);
         }
