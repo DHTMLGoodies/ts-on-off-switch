@@ -7,11 +7,12 @@
     "test": "karma start",
     "build": "webpack --env development",
     "prod": "webpack --env production",
-    "deploy:prod": "npm run lint && npm run prod -s && npm run version:patch",
     "lint": "tslint ./src/OnOffSwitch.ts",
+    "push:origin": "git push --tags origin HEAD:master",
     "version:major": "npm version major",
     "version:minor": "npm version minor",
-    "version:patch": "npm version patch"
+    "version:patch": "npm version patch",
+    "deploy:prod": "npm run lint && npm run prod -s && npm run version:patch && npm run push:origin"
   },
   "author": "",
   "license": "MIT",
