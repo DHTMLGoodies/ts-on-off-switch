@@ -1,12 +1,13 @@
 {
-  "name": "amk-on-off-switch",
+  "name": "ts-on-off-switch",
   "version": "1.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "karma start",
     "build": "webpack --env development",
-    "deploy:prod": "npm run lint && npm run build -s",
+    "prod": "webpack --env production",
+    "deploy:prod": "npm run lint && npm run prod -s && npm run version:patch",
     "lint": "tslint ./src/OnOffSwitch.ts",
     "version:major": "npm version major",
     "version:minor": "npm version minor",
