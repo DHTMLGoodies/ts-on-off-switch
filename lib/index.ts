@@ -1,1 +1,5 @@
-export { OnOffSwitch } from "./OnOffSwitch";
+import OnOffSwitch from "./OnOffSwitch";
+
+export {
+    OnOffSwitch
+};

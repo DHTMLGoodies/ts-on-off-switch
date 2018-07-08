@@ -18,7 +18,7 @@ export interface IOnOffSwitchParams {
     listener: (name: string, checked: boolean) => void;
 }
 
-export class OnOffSwitch {
+export default class OnOffSwitch {
 
     private static switches: { [key: string]: OnOffSwitch } = {};
 
