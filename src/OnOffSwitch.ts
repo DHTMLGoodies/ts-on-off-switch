@@ -1,6 +1,6 @@
 
 import * as $ from "jquery";
-import '../scss/OnOffSwitch.scss';
+import "../scss/OnOffSwitch.scss";
 
 export interface IOnOffSwitchParams {
     el: JQuery<HTMLElement>;
@@ -44,7 +44,6 @@ export class OnOffSwitch {
 
     private minX: number;
 
-
     constructor(params: IOnOffSwitchParams) {
         this.inputEl = $(params.el);
         this.name = this.inputEl.attr("name");
@@ -54,12 +53,12 @@ export class OnOffSwitch {
         OnOffSwitch.switches[this.name] = this;
         OnOffSwitch.switches["#" + this.inputEl.attr("id")] = this;
 
-        var t = this.inputEl.attr("type");
-        this.isCheckbox = t && t.toLowerCase() == "checkbox";
+        const t = this.inputEl.attr("type");
+        this.isCheckbox = t && t.toLowerCase() === "checkbox";
         if (this.isCheckbox) {
             this.checked = this.inputEl.is(":checked");
         } else {
-            this.checked = this.inputEl.val() == 1;
+            this.checked = this.inputEl.val() === 1;
         }
 
         this.render();
@@ -97,20 +96,20 @@ export class OnOffSwitch {
         return this.params.textSizeRatio || .4;
     }
 
-    private get trackColorOff(){
-        return this.params.trackColorOff || "#EEE";
+    private get trackColorOff() {
+        return this.params.trackColorOff || "#EEE";
     }
 
-    private get trackColorOn(){
+    private get trackColorOn() {
         return this.params.trackColorOn;
     }
 
 
     private render() {
 
-        if (this.width == 0) {
-            var ratio = this.textSizeRatio / 2;
-            var widthFactor = 2 + Math.max(this.params.textOff.length * ratio, this.params.textOn.length * ratio);
+        if (this.width === 0) {
+            const ratio = this.textSizeRatio / 2;
+            const widthFactor = 2 + Math.max(this.params.textOff.length * ratio, this.params.textOn.length * ratio);
             this.width = this.height * widthFactor;
         }
 
@@ -261,7 +260,7 @@ export class OnOffSwitch {
 
 
     getBorderSize() {
-        if (this.borderSize == 0) {
+        if (this.borderSize === 0) {
             this.borderSize = Math.round(this.height / 40);
         }
         return this.borderSize;
@@ -296,7 +295,7 @@ export class OnOffSwitch {
     private startCoordinates: {
         x: number;
         elX: number;
-    }
+    };
 
     private startDragging(e: JQuery.Event<HTMLElement>) {
 
@@ -333,7 +332,7 @@ export class OnOffSwitch {
     private getX(e: JQuery.Event<HTMLElement>) {
         var x = e.pageX;
 
-        if (e.type && (e.type == "touchstart" || e.type == "touchmove")) {
+        if (e.type && (e.type === "touchstart" || e.type === "touchmove")) {
             x = (<any>e.originalEvent).touches[0].pageX;
         }
 
@@ -403,7 +402,7 @@ export class OnOffSwitch {
     }
 
     notifyListeners() {
-        if (this.params.listener != undefined) {
+        if (this.params.listener) {
             this.params.listener.call(this, this.name, this.checked);
         }
     }

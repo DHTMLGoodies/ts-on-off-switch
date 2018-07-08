@@ -5,12 +5,20 @@
   "main": "index.js",
   "scripts": {
     "test": "karma start",
-    "build": "webpack --env development"
+    "build": "webpack --env development",
+    "deploy:prod": "npm run lint && npm run build -s",
+    "lint": "tslint ./src/OnOffSwitch.ts",
+    "version:major": "npm version major",
+    "version:minor": "npm version minor",
+    "version:patch": "npm version patch"
   },
   "author": "",
   "license": "MIT",
   "devDependencies": {
+    "@types/chai": "^4.1.4",
     "@types/jquery": "^3.3.4",
+    "@types/mocha": "^5.2.4",
+    "@types/sinon": "^5.0.1",
     "awesome-typescript-loader": "^5.2.0",
     "chai": "^4.1.2",
     "clean-webpack-plugin": "^0.1.19",
@@ -32,12 +40,10 @@
     "sourcemap": "^0.1.0",
     "style-loader": "^0.21.0",
     "ts-loader": "^4.4.2",
+    "tslint": "^5.10.0",
     "typescript": "^2.9.2",
     "webpack": "^4.15.1",
-    "webpack-cli": "^3.0.8",
-    "@types/mocha": "^5.2.4",
-    "@types/sinon": "^5.0.1",
-    "@types/chai": "^4.1.4"
+    "webpack-cli": "^3.0.8"
   },
   "dependencies": {
     "jquery": "^3.3.1"

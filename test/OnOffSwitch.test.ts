@@ -49,7 +49,5 @@ describe("MinMaxSlider", () => {
 
         // then
         assert.isFalse(triggeredValue);
-
     });
-
 });
