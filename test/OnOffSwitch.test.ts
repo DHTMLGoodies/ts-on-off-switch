@@ -1,5 +1,5 @@
 import { assert } from "chai";
-import { OnOffSwitch } from "../src/OnOffSwitch";
+import { OnOffSwitch } from "../lib/index";
 import * as $ from "jquery";
 
 

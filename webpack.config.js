@@ -5,7 +5,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 const baseConfig = {
-    entry: './src/OnOffSwitch.ts',
+    entry: './lib/index.ts',
     optimization: {
         // We no not want to minimize our code.
         minimize: true
@@ -44,7 +44,7 @@ const baseConfig = {
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
-        filename: 'OnOffSwitch.js',
+        filename: 'index.js',
         libraryTarget: 'umd',
         publicPath: '/dist/',
     },
@@ -57,7 +57,7 @@ const baseConfig = {
         new MiniCssExtractPlugin({
             // Options similar to the same options in webpackOptions.output
             // both options are optional
-            filename: "OnOffSwitch.css",
+            filename: "index.css",
             chunkFilename: "[id].css"
         })
     ]
