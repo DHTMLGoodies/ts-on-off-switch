@@ -1,6 +1,6 @@
 {
   "name": "ts-on-off-switch",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "",
   "main": "dist/OnOffSwitch.js",
   "types": "dist/OnOffSwitch.d.ts",
