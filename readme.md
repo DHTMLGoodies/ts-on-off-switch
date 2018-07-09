@@ -45,6 +45,15 @@ export class TestClass {
 
 HTML
 ```
+ <html>
+
+<head>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+    <script type="text/javascript" src="node_modules/ts-on-off-switch/dist/index.js"></script>
+</head>
+
+<body>
     <div class="checkbox-container">
         <input type="checkbox" id="on-off-switch" name="switch1" checked>
     </div>
@@ -61,5 +70,7 @@ HTML
             }
         });
     </script>
+</body>
+</html>
 ```
 

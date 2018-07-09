@@ -24,10 +24,13 @@ const baseConfig = {
             {
                 test: /\.scss$/,
                 use: [
+                    /*
                     {
                         loader: MiniCssExtractPlugin.loader,
                         options: {}
                     },
+                    */
+                    "style-loader",
                     "css-loader", // translates CSS into 
                     {
                         loader: "sass-loader",
