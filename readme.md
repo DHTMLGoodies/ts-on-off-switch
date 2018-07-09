@@ -4,7 +4,9 @@ JQuery widget which transforms
 ```html
 <input type="checkbox"> 
 ```
+
 into a visual On/Off switch.
+
 ```
 npm install ts-on-off-switch --save
 ```
@@ -14,7 +16,7 @@ Example :
 
 Set module resolution to node in tsconfig.json
 
-```
+```json
    "compilerOptions": {
         "moduleResolution" : "node",
         ...
@@ -23,7 +25,7 @@ Set module resolution to node in tsconfig.json
 
 Typescript:
 
-```
+```typescript
 import * as $ from "jquery";
 
 import { OnOffSwitch } from "ts-on-off-switch";
@@ -44,9 +46,8 @@ export class TestClass {
 ```
 
 HTML
-```
- <html>
-
+```html
+<html>
 <head>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
         crossorigin="anonymous"></script>
