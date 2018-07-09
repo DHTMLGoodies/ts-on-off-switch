@@ -42,7 +42,7 @@ export default class OnOffSwitch {
     private maxX: number;
     private borderSize: number = 0;
 
-    private minX: number;
+    private minX: number = 0;
 
     constructor(params: IOnOffSwitchParams) {
         this.inputEl = $(params.el);
@@ -339,7 +339,6 @@ export default class OnOffSwitch {
         this.dragCurrentX = x;
 
         return x;
-
     }
 
     private endDrag() {

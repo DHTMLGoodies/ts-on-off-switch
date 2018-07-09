@@ -14,7 +14,8 @@
     "version:major": "npm version major",
     "version:minor": "npm version minor",
     "version:patch": "npm version patch",
-    "deploy:prod": "npm run lint && npm run build:prod -s && npm run version:patch && npm run push:origin && npm publish"
+    "deploy:prod": "npm run lint && npm run build:prod -s && npm run version:patch && npm run push:origin && npm publish",
+    "deploy:develop": "npm run lint && npm run build -s && npm run version:patch && npm run push:origin && npm publish"
   },
   "repository": {
     "type": "git",

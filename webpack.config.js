@@ -20,25 +20,6 @@ const baseConfig = {
                 test: /\.tsx?$/,
                 loader: 'awesome-typescript-loader',
                 exclude: /node_modules/
-            },
-            {
-                test: /\.scss$/,
-                use: [
-                    /*
-                    {
-                        loader: MiniCssExtractPlugin.loader,
-                        options: {}
-                    },
-                    */
-                    "style-loader",
-                    "css-loader", // translates CSS into 
-                    {
-                        loader: "sass-loader",
-                        options: {
-                            includePaths: [path.resolve(__dirname, 'scss/**/*.scss')]
-                        }
-                    }
-                ]
             }
         ]
     },
@@ -69,7 +50,28 @@ const baseConfig = {
 
 module.exports = function (env) {
 
+    env = env || 'development';
+
     console.log(`This is ${env} build`);
+
+    var sassRules = {
+        test: /\.scss$/,
+        use: [
+            env === "development" ? {
+                loader: MiniCssExtractPlugin.loader,
+                options: {}
+            } : "style-loader",
+            "css-loader", // translates CSS into 
+            {
+                loader: "sass-loader",
+                options: {
+                    includePaths: [path.resolve(__dirname, 'scss/**/*.scss')]
+                }
+            }
+        ]
+    };
+
+    baseConfig.module.rules.push(sassRules);
 
     if (env === "development") {
         baseConfig.devtool = 'inline-source-map';
