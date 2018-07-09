@@ -50,4 +50,51 @@ describe("OnOffSwitch", () => {
         // then
         assert.isFalse(triggeredValue);
     });
+
+    it("Should toggle on click", () => {
+        let checked: boolean;
+        let onOffSwitch = new OnOffSwitch({
+            el: $('<input type="checkbox" name="checkbox" checked>'),
+            textOn: "on",
+            textOff: "off",
+            listener: (name: string, c: boolean) => {
+                checked = c;
+            }
+        });
+        assert.isTrue(onOffSwitch.checked);
+
+        // when
+        onOffSwitch.$.find(".on-off-switch-track").trigger("click");
+
+        // then
+        assert.isFalse(onOffSwitch.checked);
+
+        // when
+        onOffSwitch.$.find(".on-off-switch-track").trigger("click");
+
+        // then
+        assert.isTrue(onOffSwitch.checked);
+
+    });
+
+    it("Should be able to set checked", () => {
+        // given
+        let checked: boolean;
+        let onOffSwitch = new OnOffSwitch({
+            el: $('<input type="checkbox" name="checkbox" checked>'),
+            textOn: "on",
+            textOff: "off",
+            listener: (name: string, c: boolean) => {
+                checked = c;
+            }
+        });
+
+        // when
+        onOffSwitch.checked = false;
+
+        // then
+        assert.isFalse(onOffSwitch.checked);
+
+
+    });
 });

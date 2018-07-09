@@ -7,6 +7,7 @@
   "scripts": {
     "declaration": "npx typescript --declarationDir ./dist -d ./lib/index.ts",
     "test": "karma start",
+    "watch": "webpack --env production --watch",
     "build": "webpack --env development",
     "build:prod": "webpack --env production",
     "lint": "tslint ./lib/index.ts",

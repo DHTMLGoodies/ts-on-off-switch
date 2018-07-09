@@ -34,7 +34,7 @@ export default class OnOffSwitch {
     private offTextEl: JQuery<HTMLElement>;
 
     private name: string;
-    private checked: boolean;
+    private _checked: boolean;
     private isCheckbox: boolean;
     private innerTrackWidth: number;
 
@@ -43,6 +43,16 @@ export default class OnOffSwitch {
     private borderSize: number = 0;
 
     private minX: number = 0;
+
+    private dragListener: (e: JQuery.Event<HTMLElement>) => void;
+    private dragEndListener: (e: JQuery.Event<HTMLElement>) => void;
+
+    hasBeenDragged: boolean = false;
+    private dragCurrentX: number;
+    private startCoordinates: {
+        x: number;
+        elX: number;
+    };
 
     constructor(params: IOnOffSwitchParams) {
         this.inputEl = $(params.el);
@@ -56,9 +66,9 @@ export default class OnOffSwitch {
         const t = this.inputEl.attr("type");
         this.isCheckbox = t && t.toLowerCase() === "checkbox";
         if (this.isCheckbox) {
-            this.checked = this.inputEl.is(":checked");
+            this._checked = this.inputEl.is(":checked");
         } else {
-            this.checked = this.inputEl.val() === 1;
+            this._checked = this.inputEl.val() === 1;
         }
 
         this.render();
@@ -104,9 +114,7 @@ export default class OnOffSwitch {
         return this.params.trackColorOn;
     }
 
-
     private render() {
-
         if (this.width === 0) {
             const ratio = this.textSizeRatio / 2;
             const widthFactor = 2 + Math.max(this.params.textOff.length * ratio, this.params.textOn.length * ratio);
@@ -124,31 +132,27 @@ export default class OnOffSwitch {
 
         this.applyStyles();
 
-
-        this.track.on("click", this.toggle.bind(this));
-        this.track.on("touchend", this.toggle.bind(this));
+        this.track.on("click touchend", this.toggle.bind(this));
 
         this.addEvents();
     }
 
     private addEvents() {
-        this.thumb.on("mousedown", this.startDragging.bind(this));
-        this.thumb.on("touchstart", this.startDragging.bind(this));
+        this.thumb.on("mousedown touchstart", this.startDragging.bind(this));
+
+        this.dragListener = (e) => this.drag(e);
+        this.dragEndListener = (e) => this.endDrag();
 
         this.thumb.on("mouseenter", this.enterThumb.bind(this));
         this.thumb.on("mouseleave", this.leaveThumb.bind(this));
 
-        $(document.documentElement).on("touchmove", this.drag.bind(this));
-        $(document.documentElement).on("mousemove", this.drag.bind(this));
-        $(document.documentElement).on("mouseup", this.endDrag.bind(this));
-        $(document.documentElement).on("touchend", this.endDrag.bind(this));
     }
 
     private listenToClickEvent() {
         if (this.inputEl.is(':checked')) {
-            if (!this.checked) this.toggle();
+            if (!this._checked) this.toggle();
         } else {
-            if (this.checked) this.toggle();
+            if (this._checked) this.toggle();
         }
     }
 
@@ -167,7 +171,6 @@ export default class OnOffSwitch {
         var trackHeight = this.height - (this.trackBorderWidth * 2);
         var borderWidth = this.height / 2;
 
-
         this.track = $('<div class="on-off-switch-track" style="border-radius:' + borderWidth + 'px;border-width:' + this.trackBorderWidth + 'px;' +
             'width:' + trackWidth + 'px;' +
             'height:' + trackHeight + 'px"></div>');
@@ -179,7 +182,6 @@ export default class OnOffSwitch {
 
         this.onOffTrackContainer = $('<div style="position:absolute;height:' + trackHeight + 'px;width:' + (innerTrackWidth * 2) + 'px"></div>');
         this.track.append(this.onOffTrackContainer);
-
 
         this.trackOn = $('<div class="on-off-switch-track-on" style="border-radius:' + 0 + 'px;border-width:' + this.trackBorderWidth + 'px;width:' + innerTrackWidth + 'px;height:' + trackHeight + 'px"><div class="track-on-gradient"></div></div>');
         this.onOffTrackContainer.append(this.trackOn);
@@ -214,7 +216,6 @@ export default class OnOffSwitch {
         this.trackOn.append(whiteEl);
         this.trackOff.append(whiteEl2);
 
-
         this.maxX = this.width - this.height;
     }
 
@@ -238,7 +239,6 @@ export default class OnOffSwitch {
 
         this.thumb = $('<div class="on-off-switch-thumb" style="width:' + this.height + 'px;height:' + this.height + 'px"></div>');
 
-
         var shadow = $('<div class="on-off-switch-thumb-shadow" style="border-radius:' + borderRadius + 'px;width:' + size + 'px;height:'
             + size + 'px;border-width:' + borderSize + 'px;"></div>');
 
@@ -258,7 +258,6 @@ export default class OnOffSwitch {
         this.el.append(this.thumb);
     }
 
-
     getBorderSize() {
         if (this.borderSize === 0) {
             this.borderSize = Math.round(this.height / 40);
@@ -268,12 +267,9 @@ export default class OnOffSwitch {
 
     private applyStyles() {
 
-        this.thumbColor.removeClass("on-off-switch-thumb-on");
-        this.thumbColor.removeClass("on-off-switch-thumb-off");
-        this.thumbColor.removeClass("on-off-switch-thumb-over");
+        this.thumbColor.removeClass("on-off-switch-thumb-on on-off-switch-thumb-off on-off-switch-thumb-over");
 
-
-        if (this.checked) {
+        if (this._checked) {
             this.thumbColor.addClass("on-off-switch-thumb-on");
             this.thumb.css("left", this.width - this.height);
             this.onOffTrackContainer.css("left", 0);
@@ -284,23 +280,18 @@ export default class OnOffSwitch {
             this.thumb.css("left", 0);
         }
         if (this.isCheckbox) {
-            this.inputEl.prop('checked', this.checked);
+            this.inputEl.prop('checked', this._checked);
         } else {
-            this.inputEl.val(this.checked ? 1 : 0);
+            this.inputEl.val(this._checked ? 1 : 0);
         }
     }
 
-    private isDragging: boolean = false;
-    hasBeenDragged: boolean = false;
-    private startCoordinates: {
-        x: number;
-        elX: number;
-    };
+
 
     private startDragging(e: JQuery.Event<HTMLElement>) {
+        $(document.documentElement).on("touchmove mousemove", this.dragListener);
+        $(document.documentElement).on("mouseup touchend", this.dragEndListener);
 
-
-        this.isDragging = true;
         this.hasBeenDragged = false;
         var position = this.thumb.position();
 
@@ -312,10 +303,6 @@ export default class OnOffSwitch {
     }
 
     private drag(e: JQuery.Event<HTMLElement>) {
-        if (!this.isDragging) {
-            return true;
-        }
-
         this.hasBeenDragged = true;
         var x = this.startCoordinates.elX + this.getX(e) - this.startCoordinates.x;
 
@@ -327,7 +314,7 @@ export default class OnOffSwitch {
         return false;
     }
 
-    private dragCurrentX: number;
+    
 
     private getX(e: JQuery.Event<HTMLElement>) {
         var x = e.pageX;
@@ -342,8 +329,6 @@ export default class OnOffSwitch {
     }
 
     private endDrag() {
-        if (!this.isDragging) return true;
-
         if (!this.hasBeenDragged) {
             this.toggle();
         } else {
@@ -355,7 +340,9 @@ export default class OnOffSwitch {
                 this.animateRight();
             }
         }
-        this.isDragging = false;
+
+        $(document.documentElement).off("touchmove mousemove", this.dragListener);
+        $(document.documentElement).off("mouseup touchend", this.dragEndListener);
     }
 
     private getTrackPosUnchecked() {
@@ -372,28 +359,28 @@ export default class OnOffSwitch {
         this.thumb.animate({ left: this.maxX }, 100, "swing", this.check.bind(this));
     }
 
-    check() {
-        if (!this.checked) {
-            this.checked = true;
+    private check() {
+        if (!this._checked) {
+            this._checked = true;
             this.notifyListeners();
         }
         this.applyStyles();
     }
 
-    uncheck() {
-        if (this.checked) {
-            this.checked = false;
+    private uncheck() {
+        if (this._checked) {
+            this._checked = false;
             this.notifyListeners();
         }
         this.applyStyles();
     }
 
-    toggle() {
-        if (!this.checked) {
-            this.checked = true;
+    private toggle() {
+        if (!this._checked) {
+            this._checked = true;
             this.animateRight();
         } else {
-            this.checked = false;
+            this._checked = false;
             this.animateLeft();
         }
 
@@ -401,13 +388,22 @@ export default class OnOffSwitch {
     }
 
     private notifyListeners() {
-        if (this.params.listener) {
-            this.params.listener.call(this, this.name, this.checked);
-        }
+        this.params.listener(this.name, this._checked);
     }
 
-    getValue() {
-        return this.checked;
+    /**
+     * checked setter
+     */
+    set checked(checked: boolean) {
+        if (checked !== this._checked) this.toggle();
+    }
+
+    get checked() {
+        return this._checked;
+    }
+
+    get $() {
+        return this.el;
     }
 
 }
