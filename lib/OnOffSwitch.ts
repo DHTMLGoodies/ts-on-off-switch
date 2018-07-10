@@ -3,19 +3,46 @@ import * as $ from "jquery";
 import "../scss/OnOffSwitch.scss";
 
 export interface IOnOffSwitchParams {
+    /**
+     * Reference to checkbox element
+     */
     el: JQuery<HTMLElement>;
+    /**
+     * Text for "on" state
+     */
     textOn: string;
+    /**
+     * Test for "off" state
+     */
     textOff: string;
+    /**
+     * Width of On/Off switch - default: measured by text width
+     */
     width?: number;
+    /**
+     * Height of On/Off switch - default = 30
+     */
     height?: number;
     trackBorderWidth?: number;
     trackColorOn?: string;
     trackColorOff?: string;
+    /**
+     * Optional text color for "on" state
+     */
     textColorOn?: string;
+    /**
+     * Optional text color for "off" state
+     */
     textColorOff?: string;
     trackBorderColor?: string;
+    /**
+     * Fine tuning of text size. default: 0.4
+     */
     textSizeRatio?: number;
-    listener: (name: string, checked: boolean) => void;
+    /**
+     * Check/Uncheck listener
+     */
+    listener: (checked: boolean, name: string) => void;
 }
 
 export default class OnOffSwitch {
@@ -314,7 +341,7 @@ export default class OnOffSwitch {
         return false;
     }
 
-    
+
 
     private getX(e: JQuery.Event<HTMLElement>) {
         var x = e.pageX;
@@ -351,12 +378,12 @@ export default class OnOffSwitch {
 
     private animateLeft() {
         this.onOffTrackContainer.animate({ left: this.getTrackPosUnchecked() }, 100);
-        this.thumb.animate({ left: 0 }, 100, "swing", this.uncheck.bind(this));
+        this.thumb.animate({ left: 0 }, 100, "swing", () => this.uncheck());
     }
 
     private animateRight() {
         this.onOffTrackContainer.animate({ left: 0 }, 100);
-        this.thumb.animate({ left: this.maxX }, 100, "swing", this.check.bind(this));
+        this.thumb.animate({ left: this.maxX }, 100, "swing", () => this.check());
     }
 
     private check() {
@@ -388,7 +415,7 @@ export default class OnOffSwitch {
     }
 
     private notifyListeners() {
-        this.params.listener(this.name, this._checked);
+        this.params.listener(this._checked, this.name);
     }
 
     /**

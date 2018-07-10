@@ -14,7 +14,7 @@ describe("OnOffSwitch", () => {
             el: $('<input type="checkbox" name="checkbox">'),
             textOn: "on",
             textOff: "off",
-            listener: (name: string, checked: boolean) => {
+            listener: (checked: boolean, name: string) => {
 
             }
         });
@@ -30,7 +30,7 @@ describe("OnOffSwitch", () => {
             el: $('<input type="checkbox" name="checkbox">'),
             textOn: "on",
             textOff: "off",
-            listener: (name: string, checked: boolean) => {
+            listener: (checked: boolean, name: string) => {
                 triggeredName = name;
                 triggeredValue = checked;
 
@@ -38,14 +38,14 @@ describe("OnOffSwitch", () => {
         });
 
         // when
-        onOffSwitch.check();
+        onOffSwitch.checked = true;
 
         // then
         assert.equal(triggeredName, "checkbox");
         assert.isTrue(triggeredValue);
 
         // when
-        onOffSwitch.uncheck();
+        onOffSwitch.checked = false;
 
         // then
         assert.isFalse(triggeredValue);
@@ -57,7 +57,7 @@ describe("OnOffSwitch", () => {
             el: $('<input type="checkbox" name="checkbox" checked>'),
             textOn: "on",
             textOff: "off",
-            listener: (name: string, c: boolean) => {
+            listener: (c: boolean) => {
                 checked = c;
             }
         });
@@ -84,7 +84,7 @@ describe("OnOffSwitch", () => {
             el: $('<input type="checkbox" name="checkbox" checked>'),
             textOn: "on",
             textOff: "off",
-            listener: (name: string, c: boolean) => {
+            listener: (c: boolean, name: string) => {
                 checked = c;
             }
         });
